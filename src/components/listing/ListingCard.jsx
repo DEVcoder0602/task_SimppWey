@@ -1,12 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const ListingCard = () => {
+const ListingCard = ({ ele }) => {
   return (
     <div className="my-4 w-1/4 text-center">
       <Box sx={{ minWidth: 275 }}>
@@ -16,22 +13,22 @@ const ListingCard = () => {
         >
           <CardContent>
             <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
+              variant="h4"
+              marginBottom={2}
+              style={{ textTransform: "capitalize" }}
             >
-              Word of the Day
+              {ele.server_name}
             </Typography>
-            <Typography variant="h5" component="div">
-              be nevolent
+            <Typography gutterBottom>{ele.aws_region}</Typography>
+            <Typography sx={{ mb: 1.5 }}>
+              Method : {ele.request_method}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
+            <Typography sx={{ mb: 1.5 }}>
+              Source IP - {ele.source_ip}
             </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
+            <Typography sx={{ mb: 1.5 }}>
+              {" "}
+              Destination IP - {ele.destination_ip}
             </Typography>
           </CardContent>
         </Card>
