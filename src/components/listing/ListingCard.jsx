@@ -1,0 +1,43 @@
+import { useDispatch, useSelector } from "react-redux";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+const ListingCard = () => {
+  return (
+    <div className="my-4 w-1/4 text-center">
+      <Box sx={{ minWidth: 275 }}>
+        <Card
+          variant="outlined"
+          style={{ backgroundColor: "black", color: "white" }}
+        >
+          <CardContent>
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              Word of the Day
+            </Typography>
+            <Typography variant="h5" component="div">
+              be nevolent
+            </Typography>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary">
+              adjective
+            </Typography>
+            <Typography variant="body2">
+              well meaning and kindly.
+              <br />
+              {'"a benevolent smile"'}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
+    </div>
+  );
+};
+
+export default ListingCard;
