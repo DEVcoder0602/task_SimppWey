@@ -14,7 +14,7 @@ import {
   setSelectedRegion,
   setSelectedServer,
 } from "../../store/dataSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,12 +44,22 @@ const Listing = () => {
   const selectedMethod = useSelector((state) => state.data.selectedMethod);
   const dataFields = useSelector((state) => state.data.dataKeys);
 
-  const [fields, setFields] = useState(dataFields);
-  console.log(fields);
+  const [fields, setFields] = useState([]);
+  const [initialFields, setInitialFields] = useState([
+    "aws_region",
+    "request_method",
+    "source_ip",
+    "destination_ip",
+    "response_time",
+  ]);
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  // console.log(dataFields);
+  useEffect(() => {
+    setFields(dataFields);
+  }, [dataFields]);
+
+  // console.log("data fields", dataFields);
 
   const differentServer = Array.from(
     new Set(data.map((ele) => ele.server_name))
@@ -106,9 +116,9 @@ const Listing = () => {
     const field = e.target.value;
     const checked = e.target.checked;
     if (checked) {
-      setFields([...fields, field]);
+      setInitialFields([...initialFields, field]);
     } else {
-      setFields(fields.filter((item) => item !== field));
+      setInitialFields(initialFields.filter((item) => item !== field));
     }
   };
 
@@ -211,7 +221,7 @@ const Listing = () => {
               control={
                 <Checkbox
                   value={field}
-                  checked={fields.includes(field)}
+                  checked={initialFields.includes(field)}
                   onChange={handleFieldChange}
                 />
               }
@@ -225,11 +235,17 @@ const Listing = () => {
           <TableHead>
             <TableRow>
               <StyledTableCell>Server Name</StyledTableCell>
+              {/* <StyledTableCell>Server Name</StyledTableCell>
               <StyledTableCell align="right">Server Region</StyledTableCell>
               <StyledTableCell align="right">Method</StyledTableCell>
               <StyledTableCell align="right">Source IP</StyledTableCell>
               <StyledTableCell align="right">Destination IP</StyledTableCell>
-              <StyledTableCell align="right">Response Time</StyledTableCell>
+              <StyledTableCell align="right">Response Time</StyledTableCell> */}
+              {initialFields.map((field, index) => (
+                <StyledTableCell key={index} align="right">
+                  {field}
+                </StyledTableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -241,11 +257,11 @@ const Listing = () => {
                 <TableCell component="th" scope="row">
                   {ele.server_name}
                 </TableCell>
-                <TableCell align="right">{ele.aws_region}</TableCell>
-                <TableCell align="right">{ele.request_method}</TableCell>
-                <TableCell align="right">{ele.source_ip}</TableCell>
-                <TableCell align="right">{ele.destination_ip}</TableCell>
-                <TableCell align="right">{ele.response_time} s</TableCell>
+                {initialFields.map((field, index) => (
+                  <TableCell key={index} align="right">
+                    {ele[field]}
+                  </TableCell>
+                ))}
               </StyledTableRow>
             ))}
           </TableBody>
